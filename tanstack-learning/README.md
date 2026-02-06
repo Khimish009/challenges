@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Challenge #3: Learning TanStack Query (Next.js)
 
-## Getting Started
+**Цель:** Изучить фундаментальные концепции Server State Management на практике.
+**Стек:** Next.js (App Router), TanStack Query v5, Tailwind CSS, TypeScript.
 
-First, run the development server:
+### 🎯 Реализованный функционал
+
+1.  **Setup & Архитектура**
+    *   Настроен `QueryClientProvider` в корневом layout.
+    *   Создана модульная структура: `components`, `hooks`, `types`, `constants`.
+
+2.  **Запросы (Queries)**
+    *   Получение списка пользователей с jsonplaceholder.
+    *   Обработка состояний загрузки:
+        *   `isPending` (первичная загрузка / нет данных).
+        *   `isFetching` (обновление данных).
+    *   Обработка ошибок сети и API.
+
+3.  **Мутации (Mutations) & Optimistic Updates**
+    *   Реализована мутация "обновления имени пользователя".
+    *   **Optimistic UI:** Мгновенное обновление интерфейса до ответа сервера.
+    *   **Race Conditions:** Отмена исходящих запросов (`cancelQueries`) перед мутацией.
+    *   **Rollback:** Автоматический откат к предыдущему состоянию при ошибке (`context.previousUsers`).
+    *   **Invalidation:** Автоматический перезапрос свежих данных (`invalidateQueries`) после завершения мутации.
+
+4.  **UX / Best Practices**
+    *   Защита от "Double Submit": Блокировка интерфейса во время мутации.
+    *   Визуализация состояний "Loading" и "Refreshing".
+    *   Выделение логики в кастомный хук `useUsers`.
+
+### 🛠 Как запустить
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
