@@ -1,5 +1,7 @@
 # Challenge #3: Learning TanStack Query (Next.js)
 
+**Live Demo:** [challenges-ebon-chi.vercel.app](https://challenges-ebon-chi.vercel.app/)
+
 **Цель:** Изучить фундаментальные концепции Server State Management на практике.
 **Стек:** Next.js (App Router), TanStack Query v5, Tailwind CSS, TypeScript.
 

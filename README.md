@@ -1,4 +1,4 @@
-# 🚀 ITBooster Challenges
+# 🚀 Challenges
 
 Welcome to my engineering playground.
 This repository serves as a collection of isolated "learning-by-doing" projects. Each folder represents a specific challenge aimed at mastering new technologies, architectural patterns, or libraries in the modern web ecosystem.
@@ -10,8 +10,8 @@ This repository serves as a collection of isolated "learning-by-doing" projects.
 
 ## 📂 Challenges Directory
 
-| Project | Tech Stack | Description |
-|---------|------------|-------------|
-| [`tanstack-learning`](./tanstack-learning) | **TanStack Query v5**, Next.js, Tailwind | Mastering Server State: caching, mutations, optimistic updates, and race condition handling. |
+| Project | Tech Stack | Description | Demo |
+|---------|------------|-------------|------|
+| [`tanstack-learning`](./tanstack-learning) | **TanStack Query v5**, Next.js, Tailwind | Mastering Server State: caching, mutations, optimistic updates. | [Live App](https://challenges-ebon-chi.vercel.app/) |
 
 *(More challenges loading...)*
