@@ -6,7 +6,7 @@ import { useState, type PropsWithChildren } from "react";
 
 export const TanstackProviders = ({ children }: PropsWithChildren) => {
     const [queryClient] = useState(() => new QueryClient())
-     
+
     return (
         <QueryClientProvider client={queryClient}>
             {children}
