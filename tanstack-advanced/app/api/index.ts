@@ -1,0 +1,1 @@
+export { fetchPosts, updatePost } from "./posts"

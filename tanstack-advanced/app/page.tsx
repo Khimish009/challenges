@@ -1,4 +1,4 @@
-import { fetchPosts } from "./api/posts";
+import { fetchPosts } from "./api";
 import { PostList } from "./components";
 import type { Post } from "./types";
 

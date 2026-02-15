@@ -1,8 +1,8 @@
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { POSTS_PER_PAGE, QUERY_KEYS } from "../constants"
 import { Post } from "../types"
-import { fetchPosts } from "../api/posts"
-import { useEffect, useRef, useState } from "react"
+import { fetchPosts } from "../api"
+import { useEffect, useRef } from "react"
 
 export const useInfinitePosts = ({ initialData }: { initialData?: Post[] }) => {
     const loadMoreRef = useRef(null)

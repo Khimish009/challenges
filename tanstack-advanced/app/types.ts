@@ -1,13 +1,20 @@
+import { type InfiniteData } from "@tanstack/query-core"
+
 export type Post = {
-    userId: number
-    id: number
-    title: string
-    body: string
+  userId: number
+  id: number
+  title: string
+  body: string
+}
+
+export type UpdatePostVariables = {
+  postId: number;
+  updates: Partial<Post>
 }
 
 declare global {
   interface Window {
     __TANSTACK_QUERY_CLIENT__:
-      import("@tanstack/query-core").QueryClient;
+    import("@tanstack/query-core").QueryClient;
   }
 }
