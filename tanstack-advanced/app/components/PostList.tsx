@@ -2,7 +2,7 @@
 
 import { useInfinitePosts, useUpdatePost } from "../hooks"
 import { Post } from "../types"
-import { CancelButton } from "./CancelButton"
+import { CacheButtons } from "./CacheButtons"
 
 export const PostList = ({ initialData }: { initialData?: Post[] }) => {
     const { posts, isError, error, isPending, hasNextPage, loadMoreRef } = useInfinitePosts({ initialData })
@@ -18,7 +18,7 @@ export const PostList = ({ initialData }: { initialData?: Post[] }) => {
 
     return (
         <div>
-            <CancelButton />
+            <CacheButtons />
             <div>
                 {posts?.map(post => {
                     return (
