@@ -2,6 +2,7 @@
 
 import { useInfinitePosts, useUpdatePost } from "../hooks"
 import { Post } from "../types"
+import { CancelButton } from "./CancelButton"
 
 export const PostList = ({ initialData }: { initialData?: Post[] }) => {
     const { posts, isError, error, isPending, hasNextPage, loadMoreRef } = useInfinitePosts({ initialData })
@@ -17,17 +18,20 @@ export const PostList = ({ initialData }: { initialData?: Post[] }) => {
 
     return (
         <div>
-            {posts?.map(post => {
-                return (
-                    <div
-                        key={post.id}
-                        onClick={() => updatePost({ postId: post.id, updates: { title: `${post.title} ✅` } })}
-                    >
-                        {post.title}
-                    </div>
-                )
-            })}
-            {hasNextPage && <div ref={loadMoreRef}>Load more</div>}
+            <CancelButton />
+            <div>
+                {posts?.map(post => {
+                    return (
+                        <div
+                            key={post.id}
+                            onClick={() => updatePost({ postId: post.id, updates: { title: `${post.title} ✅` } })}
+                        >
+                            {post.title}
+                        </div>
+                    )
+                })}
+                {hasNextPage && <div ref={loadMoreRef}>Load more</div>}
+            </div>
         </div>
     )
 }
