@@ -15,6 +15,8 @@ export const useInfinitePosts = ({ initialData }: { initialData?: Post[] }) => {
             if (lastPage.length < POSTS_PER_PAGE) return undefined
             return allPages.length + 1
         },
+        staleTime: 5 * 1000,
+        gcTime: 30 * 1000,
         ...(initialData && {
             initialData: {
                 pages: [initialData],
