@@ -1,1 +1,5 @@
 export { PostList } from "./PostList"
+export { PostItem } from "./PostItem"
+export { CacheButtons } from "./CacheButtons"
+export { LoadingSpinner } from "./LoadingSpinner"
+export { ErrorMessage } from "./ErrorMessage"

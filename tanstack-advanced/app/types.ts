@@ -1,5 +1,3 @@
-import { type InfiniteData } from "@tanstack/query-core"
-
 export type Post = {
   userId: number
   id: number
@@ -8,7 +6,7 @@ export type Post = {
 }
 
 export type UpdatePostVariables = {
-  postId: number;
+  postId: number
   updates: Partial<Post>
 }
 

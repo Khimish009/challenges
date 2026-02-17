@@ -1,13 +1,13 @@
 import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query"
 import { POSTS_PER_PAGE, QUERY_KEYS } from "../constants"
-import { Post } from "../types"
+import type { Post } from "../types"
 import { fetchPosts } from "../api"
 import { useCallback, useEffect, useRef } from "react"
 
 export const useInfinitePosts = ({ initialData }: { initialData?: Post[] }) => {
     const loadMoreRef = useRef(null)
 
-    const selectProps = useCallback((data: InfiniteData<Post[], number>) => {
+    const selectPosts = useCallback((data: InfiniteData<Post[], number>) => {
         return data.pages.map((page) => page.map(({ id, title }) => ({ id, title }))).flat()
     }, [])
 
@@ -21,7 +21,7 @@ export const useInfinitePosts = ({ initialData }: { initialData?: Post[] }) => {
         },
         staleTime: 5 * 1000,
         gcTime: 30 * 1000,
-        select: selectProps,
+        select: selectPosts,
         ...(initialData && {
             initialData: {
                 pages: [initialData],
