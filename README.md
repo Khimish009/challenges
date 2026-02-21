@@ -13,5 +13,7 @@ This repository serves as a collection of isolated "learning-by-doing" projects.
 | Project | Tech Stack | Description | Demo |
 |---------|------------|-------------|------|
 | [`tanstack-learning`](./tanstack-learning) | **TanStack Query v5**, Next.js, Tailwind | Mastering Server State: caching, mutations, optimistic updates. | [Live App](https://challenges-ebon-chi.vercel.app/) |
+| [`tanstack-advanced`](./tanstack-advanced) | **TanStack Query v5**, Next.js, Tailwind | Advanced Server State: infinite scroll, custom hooks, advanced cache management, premium UI. | - |
+| [`docker-challenge`](./docker-challenge) | **Docker**, Docker Compose, Next.js, Nest.js, Nginx, PostgreSQL, Redis, `dockerode` | Fullstack containerization: Nginx reverse proxy, multi-container architecture, dynamic Docker API management. | Local only |
 
 *(More challenges loading...)*

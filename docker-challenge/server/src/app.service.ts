@@ -34,7 +34,7 @@ export class AppService {
     await this.pullImage(image);
 
     const container = await this.docker.createContainer({
-      Image: 'node:alpine',
+      Image: image,
       Cmd: ['sleep', '3600'],
       name: 'my-dynamic-node'
     })
