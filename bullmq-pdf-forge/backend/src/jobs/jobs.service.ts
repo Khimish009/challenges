@@ -1,13 +1,23 @@
 import { InjectQueue } from "@nestjs/bullmq"
 import { Queue } from "bullmq"
 import { CreateJobDto } from "./dto/create-job.dto"
-import { Injectable, NotFoundException } from "@nestjs/common"
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common"
 
 @Injectable()
 export class JobsService {
     constructor(
         @InjectQueue('pdf-generation') private readonly queue: Queue<CreateJobDto>
     ) { }
+
+    private async findJobOrThrow(id: string) {
+        const job = await this.queue.getJob(id)
+
+        if (!job) {
+            throw new NotFoundException(`Job ${id} not found`)
+        }
+
+        return job
+    }
 
     async createJob(dto: CreateJobDto) {
         const { text } = dto
@@ -24,16 +34,23 @@ export class JobsService {
     }
 
     async getJob(id: string) {
-        const job = await this.queue.getJob(id)
-
-        if (!job) {
-            throw new NotFoundException(`Job ${id} not found`)
-        }
+        const job = await this.findJobOrThrow(id)
 
         return {
             jobId: job.id,
             status: await job.getState(),
             result: job.returnvalue,
         }
+    }
+
+    async downloadFile(id: string) {
+        const job = await this.findJobOrThrow(id)
+        const state = await job.getState()
+
+        if (state !== 'completed') {
+            throw new BadRequestException(`Job is not completed yet. Current status: ${state}`);
+        }
+
+        return job.returnvalue.filePath
     }
 }
