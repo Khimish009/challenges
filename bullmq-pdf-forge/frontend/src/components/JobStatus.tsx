@@ -4,7 +4,7 @@ import styles from './JobStatus.module.css'
 import { STATUS_DESCRIPTION, STATUS_LABEL } from '../constants'
 
 export function JobStatus({ jobId }: { jobId: string }) {
-  const job = useJobPolling(jobId)
+  const { job, error } = useJobPolling(jobId)
 
   const status = job?.status ?? 'waiting'
   const label = STATUS_LABEL[status] ?? status
@@ -24,7 +24,13 @@ export function JobStatus({ jobId }: { jobId: string }) {
       </div>
 
       <div className={styles.body}>
-        {!isTerminal && (
+        {error && (
+          <div className={styles.networkError}>
+            <span>⚠</span> {error} — retrying…
+          </div>
+        )}
+
+        {!error && !isTerminal && (
           <div className={styles.pulseRow}>
             <span className={styles.pulse} />
             <span className={styles.pulseLabel}>{description}</span>

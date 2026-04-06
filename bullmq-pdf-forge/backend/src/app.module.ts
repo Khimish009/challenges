@@ -3,6 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { BullModule } from '@nestjs/bullmq';
+import { BullBoardModule } from '@bull-board/nestjs';
+import { ExpressAdapter } from '@bull-board/express';
 import { JobsModule } from './jobs/jobs.module';
 
 @Module({
@@ -16,6 +18,10 @@ import { JobsModule } from './jobs/jobs.module';
           port: parseInt(configService.getOrThrow('REDIS_PORT'), 10),
         },
       }),
+    }),
+    BullBoardModule.forRoot({
+      route: '/queues',
+      adapter: ExpressAdapter,
     }),
     JobsModule,
   ],

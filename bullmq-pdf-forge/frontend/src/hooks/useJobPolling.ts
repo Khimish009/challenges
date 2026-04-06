@@ -4,6 +4,7 @@ import type { GetJobResponse } from "../types";
 
 export function useJobPolling(jobId: string | null) {
     const [job, setJob] = useState<GetJobResponse | null>(null)
+    const [error, setError] = useState<string | null>(null)
     const timerId = useRef<number | null>(null)
 
     useEffect(() => {
@@ -16,17 +17,22 @@ export function useJobPolling(jobId: string | null) {
         }
 
         timerId.current = window.setInterval(async () => {
-            const job = await getJob(jobId)
+            try {
+                const data = await getJob(jobId)
+                setJob(data)
+                setError(null)
 
-            setJob(job)
-
-            if (job.status === 'completed' || job.status === 'failed') {
-                clearIntervalFunc()
+                if (data.status === 'completed' || data.status === 'failed') {
+                    clearIntervalFunc()
+                }
+            } catch (err) {
+                setError(err instanceof Error ? err.message : 'Polling error')
+                // не останавливаем интервал — попробуем снова через 4 сек
             }
         }, 4000);
 
         return () => clearIntervalFunc()
     }, [jobId])
 
-    return job
+    return { job, error }
 }
