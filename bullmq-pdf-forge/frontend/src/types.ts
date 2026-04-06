@@ -1,8 +1,8 @@
 export type JobStatus = 'completed' | 'failed' | 'active' | 'delayed' | 'prioritized' | 'waiting' | 'waiting-children'
 
 export type CreateJobResponse = {
-    jobId: 'pending',
-    status: string
+    jobId: string,
+    status: 'pending'
 }
 
 export type GetJobResponse = {
