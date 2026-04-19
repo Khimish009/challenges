@@ -1,5 +1,5 @@
 # СТАДИЯ 1: Обрезка монорепы (Prune)
-FROM node:20-alpine as builder
+FROM node:20-alpine AS builder
 RUN apk add --no-cache libc6-compat
 # Устанавливаем turbo глобально
 RUN npm add -g turbo@^2.9.6
@@ -12,7 +12,7 @@ COPY . .
 RUN turbo prune api --docker --out-dir out-api
 
 # СТАДИЯ 2: Установка зависимостей (Installer)
-FROM node:20-alpine as installer
+FROM node:20-alpine AS installer
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
@@ -35,6 +35,8 @@ RUN npx turbo run build --filter=api...
 # СТАДИЯ 3: Запуск (Runner)
 FROM node:20-alpine AS runner
 WORKDIR /app
+
+EXPOSE 3000
 
 # Безопасность: не запускаем под root
 RUN addgroup --system --gid 1001 nodejs
