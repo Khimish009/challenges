@@ -17,7 +17,7 @@ WORKDIR /app
 # Включаем pnpm
 RUN corepack enable pnpm
 
-# Копируем только файлы манифестов (package.json, pnpm-lock.yaml), чтобы закэшировать установку пакетов
+# Копируем только файлы манифестов (package.json), чтобы закэшировать установку пакетов
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 
