@@ -19,24 +19,22 @@ WORKDIR /app
 # Включаем pnpm
 RUN corepack enable pnpm
 
-# Копируем только файлы манифестов (package.json), чтобы закэшировать установку пакетов
+# Копируем только файлы манифестов для установки пакетов (кэшируем этот слой)
 COPY .gitignore .gitignore
 COPY --from=builder /app/out-api/json/ .
-
+COPY --from=builder /app/out-api/pnpm-lock.yaml ./pnpm-lock.yaml
 RUN pnpm install --frozen-lockfile
 
-# Копируем реальный код (который меняется часто)
+# Теперь копируем исходники
 COPY --from=builder /app/out-api/full/ .
 COPY turbo.json turbo.json
 
 # Собираем ТОЛЬКО api (и его зависимости)
-RUN npx turbo run build --filter=api...
+RUN pnpm exec turbo run build --filter=api...
 
 # СТАДИЯ 3: Запуск (Runner)
 FROM node:20-alpine AS runner
 WORKDIR /app
-
-EXPOSE 3000
 
 # Безопасность: не запускаем под root
 RUN addgroup --system --gid 1001 nodejs
@@ -51,5 +49,7 @@ COPY --from=installer --chown=nestjs:nodejs /app/apps/api/package.json ./apps/ap
 # Копируем зависимости (корень И локальные)
 COPY --from=installer --chown=nestjs:nodejs /app/node_modules ./node_modules
 COPY --from=installer --chown=nestjs:nodejs /app/apps/api/node_modules ./apps/api/node_modules
+
+EXPOSE 3000
 
 CMD ["node", "apps/api/dist/main.js"]

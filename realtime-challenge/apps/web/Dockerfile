@@ -17,18 +17,18 @@ WORKDIR /app
 # Включаем pnpm
 RUN corepack enable pnpm
 
-# Копируем только файлы манифестов (package.json), чтобы закэшировать установку пакетов
+# Копируем только файлы манифестов для установки пакетов (кэшируем этот слой)
 COPY .gitignore .gitignore
 COPY --from=builder /app/out-web/json/ .
-
+COPY --from=builder /app/out-web/pnpm-lock.yaml ./pnpm-lock.yaml
 RUN pnpm install --frozen-lockfile
 
-# Копируем реальный код (который меняется часто)
+# Теперь копируем исходники и устанавливаем
 COPY --from=builder /app/out-web/full/ .
 COPY turbo.json turbo.json
 
 # Собираем ТОЛЬКО web (и его зависимости)
-RUN npx turbo run build --filter=web...
+RUN pnpm exec turbo run build --filter=web...
 
 # СТАДИЯ 3: Runner (Для Vite нужен веб-сервер, например Nginx)
 FROM nginx:alpine AS runner
