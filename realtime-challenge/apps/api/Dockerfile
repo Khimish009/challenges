@@ -8,8 +8,8 @@ WORKDIR /app
 # Копируем весь монорепозиторий
 COPY . .
 
-# Эта команда создает папку out/, в которой лежит ТОЛЬКО код apps/api и его зависимостей
-RUN turbo prune api --docker
+# Эта команда создает папку out-api/, в которой лежит ТОЛЬКО код apps/api и его зависимостей
+RUN turbo prune api --docker --out-dir out-api
 
 # СТАДИЯ 2: Установка зависимостей (Installer)
 FROM node:20-alpine as installer
@@ -21,12 +21,12 @@ RUN corepack enable pnpm
 
 # Копируем только файлы манифестов (package.json), чтобы закэшировать установку пакетов
 COPY .gitignore .gitignore
-COPY --from=builder /app/out/json .
+COPY --from=builder /app/out-api/json/ .
 
 RUN pnpm install --frozen-lockfile
 
 # Копируем реальный код (который меняется часто)
-COPY --from=builder /app/out/full/ .
+COPY --from=builder /app/out-api/full/ .
 COPY turbo.json turbo.json
 
 # Собираем ТОЛЬКО api (и его зависимости)

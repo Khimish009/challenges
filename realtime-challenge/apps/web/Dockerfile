@@ -6,8 +6,8 @@ RUN npm add -g turbo@^2.9.6
 WORKDIR /app
 # Копируем ВЕСЬ монорепозиторий
 COPY . .
-# Эта команда создает папку out/, в которой лежит ТОЛЬКО код apps/web и его зависимостей (packages/ui)
-RUN turbo prune web --docker
+# Эта команда создает папку out-web/, в которой лежит ТОЛЬКО код apps/web и его зависимостей (packages/ui)
+RUN turbo prune web --docker --out-dir out-web
 
 # СТАДИЯ 2: Установка зависимостей (Installer)
 FROM node:20-alpine AS installer
@@ -19,12 +19,12 @@ RUN corepack enable pnpm
 
 # Копируем только файлы манифестов (package.json), чтобы закэшировать установку пакетов
 COPY .gitignore .gitignore
-COPY --from=builder /app/out/json/ .
+COPY --from=builder /app/out-web/json/ .
 
 RUN pnpm install --frozen-lockfile
 
 # Копируем реальный код (который меняется часто)
-COPY --from=builder /app/out/full/ .
+COPY --from=builder /app/out-web/full/ .
 COPY turbo.json turbo.json
 
 # Собираем ТОЛЬКО web (и его зависимости)
