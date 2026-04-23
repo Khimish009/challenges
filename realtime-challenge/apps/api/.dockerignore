@@ -1,0 +1,28 @@
+# Зависимости
+node_modules
+**/node_modules
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Сборка и кэш
+dist
+.next
+.turbo
+out
+out-api
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Разное
+.env
+.env.*
+!.env.example
+README.md
+LICENSE
+.vscode
+.idea
+.DS_Store
