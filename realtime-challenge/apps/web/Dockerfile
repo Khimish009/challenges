@@ -43,7 +43,7 @@ RUN echo 'server { \
     }' > /etc/nginx/conf.d/default.conf
 
 # Копируем билд из папки dist (Vite кладет всё туда)
-COPY --from=installer /app/apps/web/dist /usr/share/nginx/html
+COPY --from=installer --chown=nginx:nginx /app/apps/web/dist /usr/share/nginx/html
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
