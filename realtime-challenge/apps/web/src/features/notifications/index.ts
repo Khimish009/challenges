@@ -8,3 +8,4 @@ export {
     type ConnectionStatus, 
     type TransportEvents
 } from "./transports"
+export { useNotifications } from "./hooks"
