@@ -10,7 +10,9 @@
     ],
     "types": [
       "vite/client"
-    ]
+    ],
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
   },
   "include": [
     "src"

@@ -1,5 +1,5 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import type { INotification } from '@repo/shared';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Query } from '@nestjs/common';
+import type { INotification, ShortPollingResponseDto } from '@repo/shared';
 import { CreateNotificationDto } from './dto/create-notification.dto';
 import { NotificationsService } from './notifications.service';
 
@@ -16,5 +16,10 @@ export class NotificationsController {
   @Get()
   findAll(): INotification[] {
     return this.notificationsService.findAll();
+  }
+
+  @Get('poll')
+  getPollNotifications(@Query('cursor') cursor?: string): ShortPollingResponseDto {
+    return this.notificationsService.getPollNotifications(cursor)
   }
 }

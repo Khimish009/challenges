@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import type { INotification } from '@repo/shared';
+import type { INotification, ShortPollingResponseDto } from '@repo/shared';
 import { v4 as uuidv4 } from 'uuid';
 import { CreateNotificationDto } from './dto/create-notification.dto';
 import { NOTIFICATION_STORE, type INotificationStore } from './interfaces/notification-store.interface';
@@ -29,5 +29,15 @@ export class NotificationsService {
 
   findSince(cursor: string): INotification[] {
     return this.store.findSince(cursor);
+  }
+
+  getPollNotifications(cursor?: string): ShortPollingResponseDto {
+    const notifications = cursor ? this.findSince(cursor) : this.findAll()
+
+    return {
+      notifications,
+      cursor: notifications.at(-1)?.createdAt ?? new Date().toISOString(),
+      hasMore: false
+    }
   }
 }
