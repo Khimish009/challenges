@@ -1,24 +1,17 @@
 import { TransportType } from "@repo/shared"
-import type { ConnectionStatus, ITransport, TransportEvents } from "./transport.interface"
+import type { ConnectionStatus } from "./transport.interface"
+import { BaseTransport } from "./base-transport"
 
-export class SseTransport implements ITransport {
+export class SseTransport extends BaseTransport {
     readonly type = TransportType.SSE
 
-    readonly status: ConnectionStatus = 'disconnected'
+    status: ConnectionStatus = 'disconnected'
 
     connect(): void {
 
     }
 
     disconnect(): void {
-        
-    }
-
-    on<K extends keyof TransportEvents>(event: K, handler: TransportEvents[K]): void {
-        
-    }
-
-    off<K extends keyof TransportEvents>(event: K, handler: TransportEvents[K]): void {
         
     }
 }
