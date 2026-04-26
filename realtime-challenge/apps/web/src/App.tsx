@@ -1,10 +1,10 @@
-import { TransportProvider } from './features/notifications'
-import './App.css'
+import { NotificationList, TransportSwitcher, TransportProvider } from './features/notifications'
 
 function App() {
   return (
     <TransportProvider>
-      <div>app</div>
+      <TransportSwitcher />
+      <NotificationList />
     </TransportProvider>
   )
 }

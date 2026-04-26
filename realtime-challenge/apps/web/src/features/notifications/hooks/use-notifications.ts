@@ -6,17 +6,15 @@ export const useNotifications = () => {
     const [notifications, setNotifications] = useState<INotification[]>([])
     const { transport } = useTransportContext()
 
-    const handlerNotifications = useCallback((notification: INotification) => {
+    const handlerNotification = useCallback((notification: INotification) => {
         setNotifications((preNotifications) => [...preNotifications, notification])
     }, [])
 
     useEffect(() => {
-        transport.on("notification", handlerNotifications)
+        transport.on("notification", handlerNotification)
 
-        return () => transport.off("notification", handlerNotifications)
-    }, [transport, handlerNotifications])
+        return () => transport.off("notification", handlerNotification)
+    }, [transport, handlerNotification])
 
-    return {
-        notifications
-    }
+    return notifications
 }

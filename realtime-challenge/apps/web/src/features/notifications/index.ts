@@ -9,3 +9,4 @@ export {
     type TransportEvents
 } from "./transports"
 export { useNotifications } from "./hooks"
+export { NotificationList, TransportSwitcher } from "./components"
